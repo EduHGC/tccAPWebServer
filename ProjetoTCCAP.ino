@@ -53,17 +53,28 @@ void loop() {
   Serial.println(requisicao.indexOf("HTTP") - 1); retorna o valor do índice string - 1
   Serial.println(requisicao.substring(requisicao.indexOf("/") + 1, requisicao.indexOf("HTTP") - 1));*/
   
-  /* Teste de tratamento da requisição utilizando o exemplo com APPInventor
-   *  
+  /* Teste de tratamento da requisição utilizando o exemplo com APPInventor 
   requisicao.remove(0, 5);
   requisicao.remove(requisicao.length()-9, 9);
   Serial.println(requisicao);*/
+  
+  //Serial.println(requisicao);//192.168.4.1/ligar -> GET /ligar HTTP/1.1   192.168.4.1 -> GET / HTTP/1.1
 
-  Serial.println(requisicao);//192.168.4.1/ligar -> GET /ligar HTTP/1.1   192.168.4.1 -> GET / HTTP/1.1
+  requisição = requisicao.substring(requisicao.indexOf("/") + 1, requisicao.indexOf("HTTP") - 1);//Corta a string com o dado necessário para as decisões
+  client.flush();//Limpa o client
 
-  //----------------Escolher o tratamento e comecar a gerar página html--------------
+
+
+
+
+
+
+
+
+
+
 
   
-  
+   
 
 }
