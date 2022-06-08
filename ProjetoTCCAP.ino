@@ -60,9 +60,24 @@ void loop() {
   
   //Serial.println(requisicao);//192.168.4.1/ligar -> GET /ligar HTTP/1.1   192.168.4.1 -> GET / HTTP/1.1
 
-  requisição = requisicao.substring(requisicao.indexOf("/") + 1, requisicao.indexOf("HTTP") - 1);//Corta a string com o dado necessário para as decisões
+  requisicao = requisicao.substring(requisicao.indexOf("/") + 1, requisicao.indexOf("HTTP") - 1);//Corta a string com o dado necessário para as decisões
   client.flush();//Limpa o client
 
+  //-------------------------------Página html-----------------------------------------------------
+
+  client.println("<!DOCTYPE html>");
+  client.println("<html lang=\"pt-BR\">");
+  client.println("<head>");
+    client.println("<meta charset=\"UTF-8\">");
+    client.println("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">");
+    client.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
+    client.println("<title>Interface de controle</title>");
+    client.println("<link href=\"https://fonts.googleapis.com/css2?family=Ubuntu:wght 300&display=swap\" rel=\"stylesheet\">");
+  client.println("</head>");
+  client.println("<body>");
+  client.println("<h1>Página</h1>");
+  client.println("</body>");
+  client.println("</html>");
 
 
 
