@@ -274,10 +274,29 @@ void loop() {
         client.println("</div>");
       client.println("</section>");
       client.println("<section>");
+      
       //Recuo---------------------------------------------------------------------------------------------
         client.println("<div class=\"item-head\">");
           client.println("<div class=\"titulo\">Recuar Macho 1</div>");
-          client.println("<div class=\"movimento off\">Parado</div>");
+          if(requisicao == ""){
+            client.println("<div class=\"movimento off\">Parado</div>");
+            digitalWrite(D1, LOW);
+            digitalWrite(D2, LOW);
+            digitalWrite(D3, LOW);
+          }
+          else if(requisicao == "recuar"){
+            client.println("<div class=\"movimento on\">Recuando</div>");
+            digitalWrite(D1, LOW);
+            digitalWrite(D2, HIGH);
+            digitalWrite(D3, HIGH);
+          }
+          else if(requisicao == "parar"){
+            client.println("<div class=\"movimento off\">Parado</div>");
+            digitalWrite(D1, LOW);
+            digitalWrite(D2, LOW);
+            digitalWrite(D3, LOW);
+          }
+          //client.println("<div class=\"movimento off\">Parado</div>");
         client.println("</div>");
         client.println("<div class=\"acoes\">");
           client.println("<a href=\"recuar\" class=\"recuar\">RECUAR</a>");
