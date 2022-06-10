@@ -266,6 +266,9 @@ void loop() {
             digitalWrite(D2, LOW);
             digitalWrite(D3, LOW);
           }
+          else if(requisicao == "recuar"){
+            client.println("<div class=\"movimento off\">Recuando</div>");
+          }
           //client.println("<div class=\"movimento on\">Parado</div>");
         client.println("</div>");
         client.println("<div class=\"acoes\">");
@@ -295,6 +298,9 @@ void loop() {
             digitalWrite(D1, LOW);
             digitalWrite(D2, LOW);
             digitalWrite(D3, LOW);
+          }
+          else if(requisicao == "avancar"){
+            client.println("<div class=\"movimento off\">Avançando</div>");
           }
           //client.println("<div class=\"movimento off\">Parado</div>");
         client.println("</div>");
