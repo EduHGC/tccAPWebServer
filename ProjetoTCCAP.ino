@@ -6,7 +6,7 @@
 #include <ESP8266WebServer.h>
 
 //Váriáveis globais
-
+flagInicial = 1;
 
 const char* ssid = "TCC"; // Identificador da rede
 const char* password = "tccplaca1"; //senha
@@ -239,7 +239,6 @@ void loop() {
 
   //Tomadas de decisões para o movimento.
       
-      
       //Avanço---------------------------------------------------------------------------------------------
         client.println("<div class=\"item-head\">");
           client.println("<div class=\"titulo\">Avançar Macho 1</div>");
@@ -257,7 +256,7 @@ void loop() {
           client.println("<div class=\"movimento off\">Parado</div>");
         client.println("</div>");
         client.println("<div class=\"acoes\">");
-          client.println("<a href=\"avancar\" class=\"recuar\">RECUAR</a>");
+          client.println("<a href=\"recuar\" class=\"recuar\">RECUAR</a>");
           client.println("<a href=\"parar\" class=\"pararrecuo\">PARAR</a>");
         client.println("</div>");
       client.println("</section>");
