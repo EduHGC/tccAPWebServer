@@ -13,6 +13,11 @@ WiFiServer server (80); //Inicializa o servidor na porta 80 com o objeto server
 
 void setup() {
   Serial.begin(115200);
+  
+  pinMode(D1, OUTPUT);
+  pinMode(D2, OUTPUT);
+  pinMode(D3, OUTPUT);
+  
 
   IPAddress staticIP(192, 168, 4, 2);//IP estático é exigido como parâmetro em WiFi.config
   IPAddress geteway(192, 168, 4, 1);//Gateway, IP que permite acesso ao Wemos
@@ -36,15 +41,15 @@ void loop() {
   
   //Se não tiver cliente printa e retorna ao void loop
   if(!client){
-    Serial.println("Não tem cliente");
-    delay(2000);
+    //Serial.println("Não tem cliente");
+    //delay(2000);
     return;
   }
 
   //Enquanto o cliente não pedir nada printa e mantem no while. Se possivel usar millis e não delay
   while(!client.available()){
-    Serial.println("Tem cliente, aguardando requisição");
-    delay(2000);
+    //Serial.println("Tem cliente, aguardando requisição");
+    //delay(2000);
   }
 
   String requisicao = client.readStringUntil('\r');//Lê tudo o que o cliente enviou
@@ -237,7 +242,17 @@ void loop() {
       //Avanço
         client.println("<div class=\"item-head\">");
           client.println("<div class=\"titulo\">Avançar Macho 1</div>");
-          client.println("<div class=\"movimento on\">Parado</div>");
+          if(requisicao == "avancar"){
+            client.println("<div class=\"movimento on\">Avançando</div>");
+            digitalWrite(D1, HIGH);
+            digitalWrite(D3, HIGH);
+          }
+          else if(requisicao == "parar"){
+            client.println("<div class=\"movimento on\">Parado</div>");
+            digitalWrite(D1, LOW);
+            digitalWrite(D2, LOW);
+            digitalWrite(D3, LOW);
+          }
         client.println("</div>");
         client.println("<div class=\"acoes\">");
           client.println("<a href=\"avancar\" class=\"avancar\">AVANÇAR</a>");
@@ -248,10 +263,20 @@ void loop() {
       //Recuo
         client.println("<div class=\"item-head\">");
           client.println("<div class=\"titulo\">Recuar Macho 1</div>");
-          client.println("<div class=\"movimento off\">Parado</div>");
+          if(requisicao == "recuar"){
+            client.println("<div class=\"movimento off\">Recuando</div>");
+            digitalWrite(D2, HIGH);
+            digitalWrite(D3, HIGH);           
+          }
+          else if(requisicao == "parar"){
+            client.println("<div class=\"movimento on\">Parado</div>");
+            digitalWrite(D1, LOW);
+            digitalWrite(D2, LOW);
+            digitalWrite(D3, LOW);
+          }       
         client.println("</div>");
         client.println("<div class=\"acoes\">");
-          client.println("<a href=\"avancar\" class=\"recuar\">RECUAR</a>");
+          client.println("<a href=\"recuar\" class=\"recuar\">RECUAR</a>");
           client.println("<a href=\"parar\" class=\"pararrecuo\">PARAR</a>");
         client.println("</div>");
       client.println("</section>");
