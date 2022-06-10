@@ -6,7 +6,7 @@
 #include <ESP8266WebServer.h>
 
 //Váriáveis globais
-flagInicial = 1;
+bool flagInicial = 1;
 
 const char* ssid = "TCC"; // Identificador da rede
 const char* password = "tccplaca1"; //senha
@@ -15,7 +15,11 @@ WiFiServer server (80); //Inicializa o servidor na porta 80 com o objeto server
 
 void setup() {
   Serial.begin(115200);
-
+  
+  pinMode(D1, OUTPUT);
+  pinMode(D2, OUTPUT);
+  pinMode(D3, OUTPUT);
+  
   IPAddress staticIP(192, 168, 4, 2);//IP estático é exigido como parâmetro em WiFi.config
   IPAddress geteway(192, 168, 4, 1);//Gateway, IP que permite acesso ao Wemos
   IPAddress subnet(255, 255, 255, 0);//Subnet da rede
@@ -29,7 +33,9 @@ void setup() {
   Serial.println("Server started");
   Serial.println(WiFi.softAPIP());//Imprime o gateway
   
-
+  digitalWrite(D1, LOW);
+  digitalWrite(D2, LOW);
+  digitalWrite(D3, LOW);
 }
 
 void loop() {
@@ -242,7 +248,25 @@ void loop() {
       //Avanço---------------------------------------------------------------------------------------------
         client.println("<div class=\"item-head\">");
           client.println("<div class=\"titulo\">Avançar Macho 1</div>");
-          client.println("<div class=\"movimento on\">Parado</div>");
+          if(requisicao == ""){
+            client.println("<div class=\"movimento off\">Parado</div>");
+            digitalWrite(D1, LOW);
+            digitalWrite(D2, LOW);
+            digitalWrite(D3, LOW);
+          }
+          else if(requisicao == "avancar"){
+            client.println("<div class=\"movimento on\">Avançando</div>");
+            digitalWrite(D1, HIGH);
+            digitalWrite(D2, LOW);
+            digitalWrite(D3, HIGH);
+          }
+          else if(requisicao == "parar"){
+            client.println("<div class=\"movimento off\">Parado</div>");
+            digitalWrite(D1, LOW);
+            digitalWrite(D2, LOW);
+            digitalWrite(D3, LOW);
+          }
+          //client.println("<div class=\"movimento on\">Parado</div>");
         client.println("</div>");
         client.println("<div class=\"acoes\">");
           client.println("<a href=\"avancar\" class=\"avancar\">AVANÇAR</a>");
