@@ -6,7 +6,8 @@
 #include <ESP8266WebServer.h>
 
 //Váriáveis globais
-bool flagInicial = 1;
+bool flagAvancado = false;
+bool flagRecuado = false;
 
 const char* ssid = "TCC"; // Identificador da rede
 const char* password = "tccplaca1"; //senha
@@ -19,6 +20,8 @@ void setup() {
   pinMode(D1, OUTPUT);
   pinMode(D2, OUTPUT);
   pinMode(D3, OUTPUT);
+  pinMode(D5, INPUT);//Avançado
+  pinMode(D6, INPUT);//Recuado
   
   IPAddress staticIP(192, 168, 4, 2);//IP estático é exigido como parâmetro em WiFi.config
   IPAddress geteway(192, 168, 4, 1);//Gateway, IP que permite acesso ao Wemos
@@ -54,7 +57,6 @@ void loop() {
     //Serial.println("Tem cliente, aguardando requisição");
     delay(1);
   }
-
   String requisicao = client.readStringUntil('\r');//Lê tudo o que o cliente enviou
   /*Teste de tratamento da requisição ensinado na aula onde o link está na linha 1 do código
   Serial.println(requisicao.indexOf("/") + 1); retorna o valor do índice da string + 1
@@ -70,6 +72,17 @@ void loop() {
 
   requisicao = requisicao.substring(requisicao.indexOf("/") + 1, requisicao.indexOf("HTTP") - 1);//Corta a string com o dado necessário para as decisões
   client.flush();//Limpa o client
+
+  if(digitalRead(D5) == HIGH){
+    flagAvancado = true;
+  }else if(requisicao == "recuar" || digitalRead(D5) == LOW){
+    flagAvancado = false;
+  }
+  if(digitalRead(D6) == HIGH){
+    flagRecuado = true;
+  }else if(requisicao == "avancar" || digitalRead(D6) == LOW){
+    flagRecuado = false;
+  }
 
   //-------------------------------Página html-----------------------------------------------------
 
@@ -280,7 +293,7 @@ void loop() {
             digitalWrite(D2, LOW);
             digitalWrite(D3, LOW);
           }
-          else if(requisicao == "avancar"){
+          else if(requisicao == "avancar" && flagAvancado == false){
             client.println("<div class=\"movimento on\">Avançando</div>");
             digitalWrite(D1, HIGH);
             digitalWrite(D2, LOW);
@@ -292,8 +305,17 @@ void loop() {
             digitalWrite(D2, LOW);
             digitalWrite(D3, LOW);
           }
-          else if(requisicao == "recuar"){
+          else if(requisicao == "avancar" && flagAvancado == true){
+            client.println("<div class=\"movimento on\">Avançado</div>");
+            digitalWrite(D1, LOW);
+            digitalWrite(D2, LOW);
+            digitalWrite(D3, LOW);
+          }
+          else if(requisicao == "recuar" && flagRecuado == false){
             client.println("<div class=\"movimento off\">Recuando</div>");
+          }
+          else if(requisicao == "recuar" && flagRecuado == true){
+            client.println("<div class=\"movimento off\">Recuado</div>");
           }
           //client.println("<div class=\"movimento on\">Parado</div>");
         client.println("</div>");
@@ -313,7 +335,7 @@ void loop() {
             digitalWrite(D2, LOW);
             digitalWrite(D3, LOW);
           }
-          else if(requisicao == "recuar"){
+          else if(requisicao == "recuar" && flagRecuado == false){
             client.println("<div class=\"movimento on\">Recuando</div>");
             digitalWrite(D1, LOW);
             digitalWrite(D2, HIGH);
@@ -325,8 +347,17 @@ void loop() {
             digitalWrite(D2, LOW);
             digitalWrite(D3, LOW);
           }
-          else if(requisicao == "avancar"){
-            client.println("<div class=\"movimento off\">Avançandogit</div>");
+          else if(requisicao == "recuar" && flagRecuado == true){
+            client.println("<div class=\"movimento on\">Recuado</div>");
+            digitalWrite(D1, LOW);
+            digitalWrite(D2, LOW);
+            digitalWrite(D3, LOW);
+          }
+          else if(requisicao == "avancar" && flagAvancado == false){
+            client.println("<div class=\"movimento off\">Avançando</div>");
+          }
+          else if(requisicao == "avancar" && flagAvancado == true){
+            client.println("<div class=\"movimento off\">Avançado</div>");
           }
           //client.println("<div class=\"movimento off\">Parado</div>");
         client.println("</div>");
