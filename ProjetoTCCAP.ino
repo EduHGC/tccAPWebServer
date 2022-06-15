@@ -214,6 +214,27 @@ void loop() {
       client.println("{");
         client.println("background-color: rgb(161, 55, 55);");
       client.println("}");
+      client.println("footer");
+      client.println("{");
+        client.println("width: 100%;");
+        client.println("margin-top: 66%;");
+        client.println("background: mediumblue;");
+        client.println("display: flex;");
+      client.println("}");
+      client.println("footer .rodape");
+      client.println("{");
+        client.println("width: 400px;");
+        client.println("min-height: 132px;");
+        client.println("padding: 20px;");
+      client.println("}");
+      client.println(".rodape h2");
+      client.println("{");
+        client.println("color: white;");
+      client.println("}");
+      client.println(".rodape ul h3");
+      client.println("{");
+        client.println("color: white;");
+      client.println("}");  
       client.println("@media(max-width: 1000px)");
       client.println("{");
         client.println("header");
@@ -232,6 +253,11 @@ void loop() {
         client.println("{");
           client.println("width: 100%;");
           client.println("margin-bottom: 20px;");
+        client.println("}");
+        client.println("footer");
+        client.println("{");
+          client.println("padding: auto;");
+          client.println("flex-direction: column;");
         client.println("}");
       client.println("}");
     client.println("</style>");
@@ -300,7 +326,7 @@ void loop() {
             digitalWrite(D3, LOW);
           }
           else if(requisicao == "avancar"){
-            client.println("<div class=\"movimento off\">Avançando</div>");
+            client.println("<div class=\"movimento off\">Avançandogit</div>");
           }
           //client.println("<div class=\"movimento off\">Parado</div>");
         client.println("</div>");
@@ -310,6 +336,16 @@ void loop() {
         client.println("</div>");
       client.println("</section>");
     client.println("</div>");
+    client.println("<footer>");
+      client.println("<div class=\"rodape\">");
+        client.println("<h2>Trabalho de Conclusão de Curso</h2>");
+        client.println("<ul>");
+          client.println("<h3>Faculdade SENAI</h3>");
+          client.println("<h3>Aluno: Eduardo Henrique</h3>");
+          client.println("<h3>Aluno: Felipe Duarte</h3>");
+        client.println(" </ul>");
+      client.println("</div>");
+    client.println("</footer>");
   client.println("</body>");
   client.println("</html>");
 }
