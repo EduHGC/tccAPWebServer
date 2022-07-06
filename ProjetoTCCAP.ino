@@ -92,6 +92,7 @@ void loop() {
     client.println("<meta charset=\"UTF-8\">");
     client.println("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">");
     client.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
+    client.println("<meta http-equiv=\"refresh\" content=\"1\">");
     client.println("<title>Interface de controle</title>");
     client.println("<link href=\"https://fonts.googleapis.com/css2?family=Ubuntu:wght 300&display=swap\" rel=\"stylesheet\">");
     client.println("<style>" );
