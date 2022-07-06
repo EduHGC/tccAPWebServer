@@ -287,7 +287,7 @@ void loop() {
       
       //Avanço---------------------------------------------------------------------------------------------
         client.println("<div class=\"item-head\">");
-          client.println("<div class=\"titulo\">Avançar Macho 1</div>");
+          client.println("<div class=\"titulo\">Avançar Extração 1</div>");
           if(requisicao == ""){
             client.println("<div class=\"movimento off\">Parado</div>");
             digitalWrite(D1, LOW);
@@ -329,7 +329,7 @@ void loop() {
       
       //Recuo---------------------------------------------------------------------------------------------
         client.println("<div class=\"item-head\">");
-          client.println("<div class=\"titulo\">Recuar Macho 1</div>");
+          client.println("<div class=\"titulo\">Recuar Extração 1</div>");
           if(requisicao == ""){
             client.println("<div class=\"movimento off\">Parado</div>");
             digitalWrite(D1, LOW);
